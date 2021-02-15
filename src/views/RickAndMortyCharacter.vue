@@ -1,6 +1,6 @@
 <template>
   <div>
-      one character
+    one character
   </div>
 </template>
 

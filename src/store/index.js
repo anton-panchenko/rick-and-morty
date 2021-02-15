@@ -19,7 +19,11 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    fetchCharacters({ commit }, page) {
+    fetchCharacters({state, commit }, page) {
+      const pageCharacters = state.characters[page];
+      if (pageCharacters) {
+        return Promise.resolve(pageCharacters);
+      }
       return axiosInstance.get(CHARACTERS_BY_PAGE(page))
         .then(({data}) => {
           const { info, results } = data;
@@ -35,6 +39,10 @@ export default new Vuex.Store({
       if (pageCharacters) {
         return pageCharacters.find(character => character.id ===id);
       } return null;
-    }
+    },
+    getCharactersByPage: (state) => (page) => {
+      const pageCharacters = state.characters[page];
+      return pageCharacters;
+    },
   }
 })
